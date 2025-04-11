@@ -5,9 +5,17 @@ import numpy as np
 from cvzone.HandTrackingModule import HandDetector
 import google.generativeai as genai
 from PIL import Image
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 # Initialize gemini
-genai.configure(api_key="Enter_Your_Gemini_API_Key")
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise RuntimeError("Error: GEMINI_API_KEY not found in environment variables.")
+genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the HandDetector class with the given parameters
